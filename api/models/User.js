@@ -8,7 +8,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    profileImageUrl: {
       type: DataTypes.STRING,
       allowNull: false,
     },
