@@ -1,31 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TinderCard from "react-tinder-card";
+import axios from "./config/axios";
 
 const TinderCards = () => {
-  const [people, setPeople] = useState([
-    {
-      url:
-        "https://gjunghoon-tinder-clone.s3.ap-northeast-2.amazonaws.com/sjh.jpg",
-      name: "신정현",
-    },
-    {
-      url:
-        "https://gjunghoon-tinder-clone.s3.ap-northeast-2.amazonaws.com/jsw.jpg",
-      name: "정성원",
-    },
-    {
-      url:
-        "https://gjunghoon-tinder-clone.s3.ap-northeast-2.amazonaws.com/yja.jpg",
-      name: "유재안",
-    },
-  ]);
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    const fetchPeople = async () => {
+      const { data } = await axios.get("/users");
+      setPeople(data);
+    };
+    fetchPeople();
+  }, []);
 
   return (
     <Container>
       {people.map((person) => (
         <StyledTinderCard key={person.name} preventSwipe={["up", "down"]}>
-          <Card style={{ backgroundImage: `url(${person.url})` }}>
+          <Card style={{ backgroundImage: `url(${person.profileImageUrl})` }}>
             <h3>{person.name}</h3>
           </Card>
         </StyledTinderCard>
